@@ -32,14 +32,15 @@
         }
 
 
-        function show($id) {
+        function lastFromShow($id) {
             $this->dao->select("*");
             $this->dao->from($this->getTableName());
             $this->dao->where('fk_i_media_id', $id);
             $this->dao->orderBy("i_season DESC, i_episode DESC");
+            $this->dao->limit(1);
             $result = $this->dao->get();
             if($result===false) { return array(); }
-            return $result->result();
+            return $result->row();
         }
 
     }

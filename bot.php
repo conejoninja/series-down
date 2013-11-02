@@ -7,19 +7,14 @@ require_once 'inc/database/DBCommandClass.php';
 require_once 'inc/database/DBRecordsetClass.php';
 require_once 'inc/database/DAO.php';
 require_once 'inc/database/Log.php';
+require_once 'inc/utils.php';
 
 require_once "inc/Media.php";
 require_once "inc/Episode.php";
-require_once "Snoopy/Snoopy.class.php";
+require_once "inc/Bot.php";
 
-$snoopy = new Snoopy;
-$snoopy->agent = "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1)";
-//$snoopy->referer = "";
-$snoopy->rawheaders["Pragma"] = "no-cache";
-$snoopy->maxredirs = 3;
-$snoopy->offsiteok = false;
-$snoopy->expandlinks = false;
-
+$bot = Bot::newInstance();
+$snoopy = $bot->snoopy;
 
 $submit_url = "http://series.ly/scripts/login/login.php";
 
@@ -36,7 +31,7 @@ if(preg_match('|var mediaList = \[([^\]]+)\]|', $snoopy->results, $match)) {
     $shows = json_decode("[".$match[1]."]", true);
     foreach($shows as $show) {
         if($show['pct']==0) { // FOLLOWING
-            $snoopy->fetch('http://series.ly/scripts/media/mediaInfo.php?mediaType=1&id_media=AVHH2HNEVC');
+            $snoopy->fetch('http://series.ly/scripts/media/mediaInfo.php?mediaType=1&id_media=64CUPFYTVF');
             //$snoopy->fetch('http://series.ly/scripts/media/mediaInfo.php?mediaType=1&id_media='.$show['id']);
             $raw = json_decode($snoopy->results, true);
             $media->updateShow($raw);
