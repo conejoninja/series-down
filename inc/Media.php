@@ -65,10 +65,11 @@
                                 'i_episode' => $ep['episode'],
                                 'b_has_links' => $ep['has_links'],
                                 's_status' => 'PENDING',
-                                's_download_url' => '',
+                                's_download_url' => 'http://series.ly/scripts/media/epLinks.php?mediaType=5&idc='.$ep['idc'],
                                 's_downloaded_path' => ''
                             )
                         );
+                        $epm->download($ep['idc']);
                     } else {
                         $stop = true;
                         break;

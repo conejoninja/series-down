@@ -43,5 +43,35 @@
             return $result->row();
         }
 
+        function download($id) {
+            $ep = $this->findByPrimaryKey($id);
+            $bot = Bot::newInstance();
+            if($ep['s_download_url']!='') {
+                $bot->snoopy->fetch($ep['s_download_url']);
+                $links = json_decode($bot->snoopy->results, true);
+                foreach($links as $link) {
+                    if($link['host']=='StreamCloud') {
+                        $bot->snoopy->fetch("http://series.ly/scripts/media/gotoLink.php?idv=".$link['idv']."&mediaType=5");
+                        $submit_url = $bot->snoopy->_redirectaddr;
+                        $bot->snoopy->fetch($submit_url);
+                        sleep(12);
+                        if(preg_match_all('|type="hidden" name="([^"]*)" value="([^"]*)"|', $bot->snoopy->results, $match)) {
+                            $l = count($match[1]);
+                            for($k=0;$k<$l;$k++) {
+                                $submit_vars[$match[1][$k]] = $match[2][$k];
+                            }
+                            $submit_vars['imhuman'] = 'Watch+video+now';
+                            $bot->snoopy->submit($submit_url,$submit_vars);
+                            if(preg_match('|file:\s*"([^"]+)|', $bot->snoopy->results, $match)) {
+                                download_file($match[1], 'capi.mp4');
+                            }
+                        }
+
+                        break;
+                    }
+                }
+            }
+        }
+
     }
 ?>

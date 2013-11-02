@@ -25,7 +25,7 @@ $submit_vars["paso1ok"] = "entrar";
 $snoopy->submit($submit_url,$submit_vars);
 
 // GET LIST OF TV SHOWS
-$media = Media::newInstance();
+/*$media = Media::newInstance();
 $snoopy->fetch("http://series.ly/my-series/");
 if(preg_match('|var mediaList = \[([^\]]+)\]|', $snoopy->results, $match)) {
     $shows = json_decode("[".$match[1]."]", true);
@@ -38,7 +38,9 @@ if(preg_match('|var mediaList = \[([^\]]+)\]|', $snoopy->results, $match)) {
             die;
         }
     }
-}
+}*/
+
+Episode::newInstance()->download(69870);
 
 
 
