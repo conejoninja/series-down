@@ -26,16 +26,13 @@ if(preg_match('|var mediaList = \[([^\]]+)\]|', $snoopy->results, $match)) {
     $shows = json_decode("[".$match[1]."]", true);
     foreach($shows as $show) {
         if($show['pct']==0) { // FOLLOWING
-            http://series.ly/scripts/media/mediaInfo.php?mediaType=1&id_media=AVHH2HNEVC&v=123123123
-            $snoopy->fetch('http://series.ly/series/serie-P7SE4X6VEP');
-            //$snoopy->fetch('http://series.ly/series/serie-'.$show['id']);
-            print_r($snoopy->results);
+            $snoopy->fetch('http://series.ly/scripts/media/mediaInfo.php?mediaType=1&id_media=AVHH2HNEVC');
+            //$snoopy->fetch('http://series.ly/scripts/media/mediaInfo.php?mediaType=1&id_media='.$show['id']);
+            print_r(json_decode($snoopy->results, true));
             die;
         }
     }
 }
-
-
 
 
 
