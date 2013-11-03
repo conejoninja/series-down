@@ -1,4 +1,7 @@
-
+<?php
+    require_once dirname(dirname(__FILE__))."/load.php";
+    $activities = Episode::newInstance()->activity();
+?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -44,9 +47,9 @@ body {
         </div>
         <div class="collapse navbar-collapse">
           <ul class="nav navbar-nav">
-            <li class="active"><a href="#">Home</a></li>
-            <li><a href="#about">About</a></li>
-            <li><a href="#contact">Contact</a></li>
+            <li class="active"><a href="#">Activity</a></li>
+            <li><a href="#">Detailed</a></li>
+            <li><a href="#">Settings</a></li>
           </ul>
         </div><!--/.nav-collapse -->
       </div>
@@ -55,8 +58,19 @@ body {
     <div class="container">
 
       <div class="starter-template">
-        <h1>Bootstrap starter template</h1>
-        <p class="lead">Use this document as a way to quickly start any new project.<br> All you get is this text and a mostly barebones HTML document.</p>
+        <h1>Actividad</h1>
+          <table class="table table-hover">
+              <?php foreach($activities as $ac) {
+                  $class_status = $ac['s_status']=='DOWNLOADING'?'warning':'';
+                  ?>
+                <tr class="<?php echo $class_status; ?>">
+                    <td><?php echo $ac['s_media_name']; ?></td>
+                    <td><?php echo "S".$ac['i_season']."x".$ac['i_episode']; ?></td>
+                    <td><?php echo $ac['s_name']; ?></td>
+                    <td><?php echo $ac['s_status']; ?></td>
+                </tr>
+            <?php }; ?>
+          </table>
       </div>
 
     </div><!-- /.container -->

@@ -31,6 +31,10 @@
             $this->setFields($array_fields);
         }
 
+        function getMediaTableName() {
+            return DB_TABLE_PREFIX."t_media";
+        }
+
 
         function lastFromShow($id) {
             $this->dao->select("*");
@@ -71,6 +75,17 @@
                     }
                 }
             }
+        }
+
+        function activity() {
+            $this->dao->select("e.* , m.s_name as s_media_name");
+            $this->dao->from($this->getTableName()." e");
+            $this->dao->join($this->getMediaTableName()." m", "m.pk_i_id = e.fk_i_media_id");
+            $this->dao->limit(20);
+            $this->dao->orderBy("s_status", "ASC");
+            $result = $this->dao->get();
+            if($result===false) { return array(); };
+            return $result->result();
         }
 
     }

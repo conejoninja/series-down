@@ -1,17 +1,5 @@
 <?php
-
-require_once "config.php";
-
-require_once 'inc/database/DBConnectionClass.php';
-require_once 'inc/database/DBCommandClass.php';
-require_once 'inc/database/DBRecordsetClass.php';
-require_once 'inc/database/DAO.php';
-require_once 'inc/database/Log.php';
-require_once 'inc/utils.php';
-
-require_once "inc/Media.php";
-require_once "inc/Episode.php";
-require_once "inc/Bot.php";
+require_once dirname(__FILE__)."/load.php";
 
 $bot = Bot::newInstance();
 $snoopy = $bot->snoopy;
@@ -25,7 +13,7 @@ $submit_vars["paso1ok"] = "entrar";
 $snoopy->submit($submit_url,$submit_vars);
 
 // GET LIST OF TV SHOWS
-/*$media = Media::newInstance();
+$media = Media::newInstance();
 $snoopy->fetch("http://series.ly/my-series/");
 if(preg_match('|var mediaList = \[([^\]]+)\]|', $snoopy->results, $match)) {
     $shows = json_decode("[".$match[1]."]", true);
@@ -38,9 +26,9 @@ if(preg_match('|var mediaList = \[([^\]]+)\]|', $snoopy->results, $match)) {
             die;
         }
     }
-}*/
+}
 
-Episode::newInstance()->download(69870);
+//Episode::newInstance()->download(69870);
 
 
 

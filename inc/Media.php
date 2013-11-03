@@ -69,7 +69,7 @@
                                 's_downloaded_path' => ''
                             )
                         );
-                        $epm->download($ep['idc']);
+                        //$epm->download($ep['idc']);
                     } else {
                         $stop = true;
                         break;
